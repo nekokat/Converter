@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Units;
 
 namespace Converter
 {
@@ -12,7 +13,7 @@ namespace Converter
         {
             //InitializeComponent();
             //Console.WriteLine(Test<Volume>.ToDictionary());
-            double t = Mesuarement.Convertation(24*7, Mesuarement.Unit.Time, Mesuarement.Time.Hour, Mesuarement.Time.Day);
+            double t = Mesuarement.Convertation(24*7, Unit.Time, Time.Hour, Time.Day);
             Console.WriteLine(t);
         }
     }

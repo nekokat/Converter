@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System;
+﻿using System;
 using Units;
 
 namespace Converter
@@ -13,13 +10,13 @@ namespace Converter
             return inputType switch
             {
                 //Metric
-                Length.KiloMeter => value * 1000d,
-                Length.HectoMeter => value * 100d,
-                Length.DecaMeter => value * 10d,
+                Length.Kilometer => value * 1000d,
+                Length.Hectometer => value * 100d,
+                Length.Decameter => value * 10d,
                 Length.Meter => value,
-                Length.DeciMeter => value * 1E-01d,
-                Length.CentiMeter => value * 1E-02d,
-                Length.MilliMeter => value * 1E-03d,
+                Length.Decimeter => value * 1E-01d,
+                Length.Centimeter => value * 1E-02d,
+                Length.Millimeter => value * 1E-03d,
                 //Imperial
                 Length.Foot => value * 0.3048d,
                 Length.Inch => value * ToLength(1d, Length.Foot) / 12d,
@@ -48,8 +45,8 @@ namespace Converter
                 Weight.Nanogram => value * 1E-12d,
                 Weight.Picogram => value * 1E-15d,
                 //Imperial
-                Weight.USton => value * ToWeight(0.907d, Weight.Tonne),
-                Weight.UKton => value * ToWeight(1.016d, Weight.Tonne),
+                Weight.UStonne => value * ToWeight(0.907d, Weight.Tonne),
+                Weight.UKtonne => value * ToWeight(1.016d, Weight.Tonne),
                 Weight.Pound => 453.59d * value,
                 Weight.Ounce => 28.35d * value,
                 _ => throw new NotImplementedException()

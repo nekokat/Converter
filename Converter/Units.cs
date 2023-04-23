@@ -1,19 +1,15 @@
-﻿using System;
-
-namespace Converter
+﻿namespace Units
 {
-    public class Units
+    public enum Length
     {
-        public enum Length
-        {
             //Metric
-            KiloMeter,
-            HectoMeter,
-            DecaMeter,
+            Kilometer,
+            Hectometer,
+            Decameter,
             Meter,
-            DeciMeter,
-            CentiMeter,
-            MilliMeter,
+            Decimeter,
+            Centimeter,
+            Millimeter,
             //Imperial
             Foot,
             Inch,
@@ -25,8 +21,7 @@ namespace Converter
             League
 
         }
-
-        public enum Weight
+    public enum Weight
         {
             Gigatonne,
             Megatonne,
@@ -37,14 +32,13 @@ namespace Converter
             Microgram,
             Nanogram,
             Picogram,
-            USton,
-            UKton,
+            UStonne,
+            UKtonne,
             Pound,
             Ounce,
         }
-
-        public enum Time
-        {
+    public enum Time
+    {
             Millisecond,
             Second,
             Minute,
@@ -53,9 +47,8 @@ namespace Converter
             Day,
             Week,
             Megasecond
-        }
-
-        public enum Volume
+    }
+    public enum Volume
         {
             //Metric
             Litre,
@@ -70,8 +63,7 @@ namespace Converter
             USPint,
             USFluidOunce
         }
-
-        public enum Area
+    public enum Area
         {
             SquareKilometer,
             SquareHectometer,
@@ -88,8 +80,7 @@ namespace Converter
             Acre,
             SquareMile
         }
-
-        public enum Temperature
+    public enum Temperature
         {
             Celsius,
             Kelvin,
@@ -100,8 +91,7 @@ namespace Converter
             Reaumur,
             Delisle
         }
-
-        public enum Unit
+    public enum Unit
         {
             Length,
             Weight,
@@ -110,5 +100,4 @@ namespace Converter
             Area,
             Temperature
         }
-    }
 }
