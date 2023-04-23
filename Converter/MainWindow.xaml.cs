@@ -12,8 +12,8 @@ namespace Converter
         {
             //InitializeComponent();
             //Console.WriteLine(Test<Volume>.ToDictionary());
-            Temperature t = new Temperature(0, "Kelvin", "Rankine");
-            Console.WriteLine(t.Value);
+            double t = Mesuarement.Convertation(24*7, Mesuarement.Unit.Time, Mesuarement.Time.Hour, Mesuarement.Time.Day);
+            Console.WriteLine(t);
         }
     }
 }
