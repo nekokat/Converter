@@ -12,8 +12,7 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            //Console.WriteLine(Test<Volume>.ToDictionary());
-            double t = Mesuarement.Convertation(24*7, Unit.Time, Time.Hour, Time.Day);
+            double t = Mesuarement.Convertation(24*7, Quantities.Time, Time.Hour, Time.Day);
             Console.WriteLine(t);
         }
     }

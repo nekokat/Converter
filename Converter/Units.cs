@@ -10,19 +10,23 @@
             Decimeter,
             Centimeter,
             Millimeter,
-            //Imperial
+        //Imperial
+            Thou,
             Foot,
             Inch,
+            Mil,
+            Pole,
             Hand,
             Yard,
             Chain,
             Furlong,
+            Link,
             Mile,
             League
 
         }
-    public enum Weight
-        {
+    public enum Mass
+    {
             Gigatonne,
             Megatonne,
             Tonne,
@@ -91,10 +95,10 @@
             Reaumur,
             Delisle
         }
-    public enum Unit
-        {
+    public enum Quantities
+    {
             Length,
-            Weight,
+            Mass,
             Time,
             Volume,
             Area,

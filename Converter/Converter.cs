@@ -19,36 +19,39 @@ namespace Converter
                 Length.Millimeter => value * 1E-03d,
                 //Imperial
                 Length.Foot => value * 0.3048d,
+                Length.Thou => value * ToLength(0.01d, Length.Inch),
                 Length.Inch => value * ToLength(1d, Length.Foot) / 12d,
+                Length.Mil => value * ToLength(0.001d, Length.Inch),
                 Length.Hand => value * ToLength(1d, Length.Foot) / 3d,
                 Length.Yard => value * ToLength(3d, Length.Foot),
-                Length.Chain => value * ToLength(66d, Length.Foot),
+                Length.Chain => value * ToLength(22d, Length.Yard),
                 Length.Furlong => value * ToLength(220d, Length.Yard),
+                Length.Link => value * ToLength(1, Length.Furlong) / 1000d,
                 Length.Mile => value * ToLength(1760d, Length.Yard),
                 Length.League => value * ToLength(3d, Length.Mile),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double ToWeight(double value, Weight inputType)
+        public static double ToMass(double value, Mass inputType)
         {
             return inputType switch
             {
                 //Metric
-                Weight.Gigatonne => value * 1E15d,
-                Weight.Megatonne => value * 1E12d,
-                Weight.Tonne => value * 1E6d,
-                Weight.Kilogramm => value * 1E3d,
-                Weight.Gramm => value,
-                Weight.Milligramm => value * 1E-03d,
-                Weight.Microgram => value * 1E-06d,
-                Weight.Nanogram => value * 1E-12d,
-                Weight.Picogram => value * 1E-15d,
+                Mass.Gigatonne => value * 1E15d,
+                Mass.Megatonne => value * 1E12d,
+                Mass.Tonne => value * 1E6d,
+                Mass.Kilogramm => value * 1E3d,
+                Mass.Gramm => value,
+                Mass.Milligramm => value * 1E-03d,
+                Mass.Microgram => value * 1E-06d,
+                Mass.Nanogram => value * 1E-12d,
+                Mass.Picogram => value * 1E-15d,
                 //Imperial
-                Weight.UStonne => value * ToWeight(0.907d, Weight.Tonne),
-                Weight.UKtonne => value * ToWeight(1.016d, Weight.Tonne),
-                Weight.Pound => 453.59d * value,
-                Weight.Ounce => 28.35d * value,
+                Mass.UStonne => value * ToMass(0.907d, Mass.Tonne),
+                Mass.UKtonne => value * ToMass(1.016d, Mass.Tonne),
+                Mass.Pound => 453.59d * value,
+                Mass.Ounce => 28.35d * value,
                 _ => throw new NotImplementedException()
             };
         }
@@ -147,7 +150,7 @@ namespace Converter
             };
         }
 
-        public static double Convertation(double value, Unit unit, object inputType, object outputType)
+        public static double Convertation(double value, Quantities unit, object inputType, object outputType)
         {
             double As<T>(Func<double, T, double> function)
             {
@@ -156,12 +159,12 @@ namespace Converter
 
             return unit switch
             {
-                Unit.Length => As<Length>(ToLength),
-                Unit.Weight => As<Weight>(ToWeight),
-                Unit.Time => As<Time>(ToTime),
-                Unit.Volume => As<Volume>(ToVolume),
-                Unit.Area => As<Area>(ToArea),
-                Unit.Temperature => ToTemperature(value, (Temperature)inputType, (Temperature)outputType),
+                Quantities.Length => As<Length>(ToLength),
+                Quantities.Mass => As<Mass>(ToMass),
+                Quantities.Time => As<Time>(ToTime),
+                Quantities.Volume => As<Volume>(ToVolume),
+                Quantities.Area => As<Area>(ToArea),
+                Quantities.Temperature => ToTemperature(value, (Temperature)inputType, (Temperature)outputType),
                 _ => throw new NotImplementedException()
             };
         }
