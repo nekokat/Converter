@@ -12,7 +12,7 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            double t = Mesuarement.Convertation(1, Quantities.Volume, Volume.USQuart, Volume.Litre);
+            double t = Mesuarement.Convertation(1, Quantities.Area, Area.SquareMile, Area.Acre);
             Console.WriteLine(t);
         }
     }

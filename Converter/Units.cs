@@ -79,6 +79,7 @@
         //Imperial
         CubicFoot,
         CubicInch,
+        CubicYard,
         Barrel,
         USGallon,
         ImperialGallon,
@@ -105,6 +106,9 @@
         Hectare,
         Are,
         Centiare,
+        SquareYard,
+        SquareFoot,
+        SquareInch,
         Perch,
         Rood,
         Acre,
