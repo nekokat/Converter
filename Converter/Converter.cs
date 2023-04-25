@@ -1,8 +1,18 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using Units;
 
 namespace Converter
 {
+    internal abstract class Quantity
+    {
+        protected Quantity() { }
+    }
+
+    interface IQuantity { }
+
     public class Mesuarement
     {
         public static double ToLength(double value, Length inputType)
@@ -20,15 +30,25 @@ namespace Converter
                 //Imperial
                 Length.Foot => value * 0.3048d,
                 Length.Thou => value * ToLength(0.01d, Length.Inch),
-                Length.Inch => value * ToLength(1d, Length.Foot) / 12d,
+                Length.Line => value * ToLength(1/12d, Length.Inch),
+                Length.Point => value * ToLength(1/72d, Length.Inch),
+                Length.Inch => value * ToLength(1/12d, Length.Foot),
+                Length.Palm => value * ToLength(3d, Length.Inch),
+                Length.Nail => value * ToLength(1/16d, Length.Yard),
+                Length.Finger => value * ToLength(1/8d, Length.Yard),
+                Length.Fathom => ToLength(6d, Length.Foot),
+                Length.Shackle => ToLength(30d, Length.Yard),
                 Length.Mil => value * ToLength(0.001d, Length.Inch),
-                Length.Hand => value * ToLength(1d, Length.Foot) / 3d,
+                Length.Pole => value * ToLength(0.25d, Length.Chain),
+                Length.Hand => value * ToLength(1/3, Length.Foot),
                 Length.Yard => value * ToLength(3d, Length.Foot),
                 Length.Chain => value * ToLength(22d, Length.Yard),
                 Length.Furlong => value * ToLength(220d, Length.Yard),
-                Length.Link => value * ToLength(1, Length.Furlong) / 1000d,
+                Length.Link => value * ToLength(1/1000d, Length.Furlong),
                 Length.Mile => value * ToLength(1760d, Length.Yard),
                 Length.League => value * ToLength(3d, Length.Mile),
+                Length.Cable => value * ToLength(608d, Length.Foot),
+                Length.NauticalMile => value * ToLength(10, Length.Cable),
                 _ => throw new NotImplementedException()
             };
         }
@@ -41,6 +61,7 @@ namespace Converter
                 Mass.Gigatonne => value * 1E15d,
                 Mass.Megatonne => value * 1E12d,
                 Mass.Tonne => value * 1E6d,
+                Mass.Quintal => value * 1E5d,
                 Mass.Kilogramm => value * 1E3d,
                 Mass.Gramm => value,
                 Mass.Milligramm => value * 1E-03d,
@@ -52,6 +73,11 @@ namespace Converter
                 Mass.UKtonne => value * ToMass(1.016d, Mass.Tonne),
                 Mass.Pound => 453.59d * value,
                 Mass.Ounce => 28.35d * value,
+                Mass.Stone => value * ToMass(14d, Mass.Pound),
+                Mass.Quarter => value * ToMass(2d, Mass.Stone),
+                Mass.Hundredweight => value * ToMass(4d, Mass.Quarter),
+                Mass.Carat => value * ToMass(200d, Mass.Milligramm),
+                Mass.Point => value * ToMass(2d, Mass.Milligramm),
                 _ => throw new NotImplementedException()
             };
         }
@@ -78,6 +104,7 @@ namespace Converter
             {
                 //Metric
                 Volume.Litre => value * 0.001d,
+                Volume.Millilitre => value * 1e-6d,
                 Volume.CubicDecimetre => value * ToVolume(1, Volume.Litre),
                 Volume.CubicMetre => value,
                 Volume.CubicCentimetre => value * 1e-6d,
@@ -86,8 +113,17 @@ namespace Converter
                 Volume.CubicInch => value * Math.Pow(ToLength(1, Length.Inch), 3d),
                 Volume.Barrel => value * ToVolume(9.702d, Volume.CubicInch),
                 Volume.USGallon => value * ToVolume(231d, Volume.CubicInch),
-                Volume.USPint => value * ToVolume(1, Volume.USGallon) / 8d,
-                Volume.USFluidOunce => value * ToVolume(1, Volume.USGallon) / 128d,
+                Volume.ImperialGallon => value * ToVolume(1.20095042342d, Volume.USGallon),
+                Volume.Cup => value * ToVolume(0.5d, Volume.ImperialPint),
+                Volume.Gill => value * ToVolume(5d, Volume.ImperialFluidOunce),
+                Volume.USPint => value * ToVolume(16d, Volume.USFluidOunce),
+                Volume.ImperialPint => value * ToVolume(20, Volume.ImperialFluidOunce),
+                Volume.USQuart => value * ToVolume(2d, Volume.USPint),
+                Volume.ImperialQuart => value * ToVolume(2d, Volume.ImperialPint),
+                Volume.USFluidOunce => value * ToVolume(1/128d, Volume.USGallon),
+                Volume.ImperialFluidOunce => value * ToVolume(1/160d, Volume.ImperialGallon),
+                Volume.Peck => value * ToVolume(2d, Volume.ImperialGallon),
+                Volume.Bushel => value * ToVolume(4d, Volume.Peck),
                 _ => throw new NotImplementedException()
             };
         }

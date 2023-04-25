@@ -12,7 +12,7 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            double t = Mesuarement.Convertation(24*7, Quantities.Time, Time.Hour, Time.Day);
+            double t = Mesuarement.Convertation(1, Quantities.Volume, Volume.Gill, Volume.Millilitre);
             Console.WriteLine(t);
         }
     }
