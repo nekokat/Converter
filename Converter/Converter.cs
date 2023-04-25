@@ -118,7 +118,7 @@ namespace Converter
                 Volume.Gill => value * ToVolume(5d, Volume.ImperialFluidOunce),
                 Volume.USPint => value * ToVolume(16d, Volume.USFluidOunce),
                 Volume.ImperialPint => value * ToVolume(20, Volume.ImperialFluidOunce),
-                Volume.USQuart => value * ToVolume(2d, Volume.USPint),
+                Volume.USQuart => value * ToVolume(0.25d, Volume.USGallon),
                 Volume.ImperialQuart => value * ToVolume(2d, Volume.ImperialPint),
                 Volume.USFluidOunce => value * ToVolume(1/128d, Volume.USGallon),
                 Volume.ImperialFluidOunce => value * ToVolume(1/160d, Volume.ImperialGallon),

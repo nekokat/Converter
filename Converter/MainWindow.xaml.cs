@@ -12,7 +12,7 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            double t = Mesuarement.Convertation(1, Quantities.Volume, Volume.Gill, Volume.Millilitre);
+            double t = Mesuarement.Convertation(1, Quantities.Volume, Volume.USQuart, Volume.Litre);
             Console.WriteLine(t);
         }
     }
