@@ -6,9 +6,9 @@ using Units;
 
 namespace Converter
 {
-    internal abstract class Quantity
+    public abstract class Quantity
     {
-        protected Quantity(double value, Unit unit)
+        public Quantity(double value, Unit unit)
         { 
             Value = value;
             Unit = unit;
@@ -18,10 +18,22 @@ namespace Converter
         public Unit Unit { get; protected set; }
     }
 
-    interface IQuantity { }
-
-    public class Mesuarement
+    class UnitVolume : Quantity
     {
+        public UnitVolume(double value, Unit unit) : base(value, unit)
+        {
+
+        }
+    }
+
+    public class Mesuarement : Quantity
+    {
+        public Mesuarement(double value, Unit unit, object inputType, object outputType) : base(value, unit)
+        {
+
+        }
+
+
         public static double ToLength(double value, Length inputType)
         {
             return inputType switch
@@ -197,7 +209,7 @@ namespace Converter
             };
         }
 
-        public static double Convertation(double value, Quantities unit, object inputType, object outputType)
+        public static double Convertation(double value, Unit unit, object inputType, object outputType)
         {
             double As<T>(Func<double, T, double> function)
             {
@@ -206,12 +218,12 @@ namespace Converter
 
             return unit switch
             {
-                Quantities.Length => As<Length>(ToLength),
-                Quantities.Mass => As<Mass>(ToMass),
-                Quantities.Time => As<Time>(ToTime),
-                Quantities.Volume => As<Volume>(ToVolume),
-                Quantities.Area => As<Area>(ToArea),
-                Quantities.Temperature => ToTemperature(value, (Temperature)inputType, (Temperature)outputType),
+                Unit.Length => As<Length>(ToLength),
+                Unit.Mass => As<Mass>(ToMass),
+                Unit.Time => As<Time>(ToTime),
+                Unit.Volume => As<Volume>(ToVolume),
+                Unit.Area => As<Area>(ToArea),
+                Unit.Temperature => ToTemperature(value, (Temperature)inputType, (Temperature)outputType),
                 _ => throw new NotImplementedException()
             };
         }
