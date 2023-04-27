@@ -6,35 +6,35 @@ using Units;
 
 namespace Converter
 {
-    public abstract class Quantity
+    public abstract class Quantity<T> : IUnit<T>
     {
-        public Quantity(double value, Unit unit)
-        { 
-            Value = value;
-            Unit = unit;
+        public Quantity(double value, T unit)
+        {
+            this.Value = value;
+            this.Unit = unit;
         }
 
-        public double Value { get; protected set; }
-        public Unit Unit { get; protected set; }
+        public double Value { get; set; }
+        public T Unit { get; set; }
     }
 
-    class UnitVolume : Quantity
+    public interface IUnit<T>
     {
-        public UnitVolume(double value, Unit unit) : base(value, unit)
-        {
+        double Value { get; set; }
 
-        }
+        T Unit { get; set; }
     }
 
-    public class Mesuarement : Quantity
+    internal class DVolume : Quantity<Volume>
     {
-        public Mesuarement(double value, Unit unit, object inputType, object outputType) : base(value, unit)
-        {
+        public DVolume(double value, Volume unit) : base(value, unit) { }
 
-        }
+    }
 
+    public class Mesuarement
+    {
 
-        public static double ToLength(double value, Length inputType)
+    public static double ToLength(double value, Length inputType)
         {
             return inputType switch
             {

@@ -12,8 +12,8 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            double t = Mesuarement(1, Unit.Volume, Volume.Gallon, Volume.FluidOunce);
-            Console.WriteLine(t);
+            DVolume t = new DVolume(100, Volume.Gallon);
+            Console.WriteLine(t.Value);
         }
     }
 }
