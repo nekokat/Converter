@@ -8,7 +8,14 @@ namespace Converter
 {
     internal abstract class Quantity
     {
-        protected Quantity() { }
+        protected Quantity(double value, Unit unit)
+        { 
+            Value = value;
+            Unit = unit;
+        }
+
+        public double Value { get; protected set; }
+        public Unit Unit { get; protected set; }
     }
 
     interface IQuantity { }
@@ -24,9 +31,9 @@ namespace Converter
                 Length.Hectometer => value * 100d,
                 Length.Decameter => value * 10d,
                 Length.Meter => value,
-                Length.Decimeter => value * 1E-01d,
-                Length.Centimeter => value * 1E-02d,
-                Length.Millimeter => value * 1E-03d,
+                Length.Decimeter => value * 0.1d,
+                Length.Centimeter => value * 0.01d,
+                Length.Millimeter => value * 0.001d,
                 //Imperial
                 Length.Foot => value * 0.3048d,
                 Length.Thou => value * ToLength(0.01d, Length.Inch),
@@ -114,16 +121,16 @@ namespace Converter
                 Volume.CubicYard => value * Math.Pow(ToLength(1, Length.Yard), 3d),
                 Volume.Barrel => value * ToVolume(9.702d, Volume.CubicInch),
                 Volume.USGallon => value * ToVolume(231d, Volume.CubicInch),
-                Volume.ImperialGallon => value * ToVolume(1.20095042342d, Volume.USGallon),
-                Volume.Cup => value * ToVolume(0.5d, Volume.ImperialPint),
-                Volume.Gill => value * ToVolume(5d, Volume.ImperialFluidOunce),
+                Volume.Gallon => value * ToVolume(1.20095042342d, Volume.USGallon),
+                Volume.Cup => value * ToVolume(0.5d, Volume.Pint),
+                Volume.Gill => value * ToVolume(5d, Volume.FluidOunce),
                 Volume.USPint => value * ToVolume(16d, Volume.USFluidOunce), 
-                Volume.ImperialPint => value * ToVolume(20, Volume.ImperialFluidOunce),
+                Volume.Pint => value * ToVolume(20, Volume.FluidOunce),
                 Volume.USQuart => value * ToVolume(0.25d, Volume.USGallon),
-                Volume.ImperialQuart => value * ToVolume(2d, Volume.ImperialPint),
+                Volume.Quart => value * ToVolume(2d, Volume.Pint),
                 Volume.USFluidOunce => value * ToVolume(1/128d, Volume.USGallon),
-                Volume.ImperialFluidOunce => value * ToVolume(1/160d, Volume.ImperialGallon),
-                Volume.Peck => value * ToVolume(2d, Volume.ImperialGallon),
+                Volume.FluidOunce => value * ToVolume(1/160d, Volume.Gallon),
+                Volume.Peck => value * ToVolume(2d, Volume.Gallon),
                 Volume.Bushel => value * ToVolume(4d, Volume.Peck),
                 _ => throw new NotImplementedException()
             };

@@ -82,15 +82,15 @@
         CubicYard,
         Barrel,
         USGallon,
-        ImperialGallon,
+        Gallon,
         Cup,
         Gill,
         USPint,
-        ImperialPint,
+        Pint,
         USQuart,
-        ImperialQuart,
+        Quart,
         USFluidOunce,
-        ImperialFluidOunce,
+        FluidOunce,
         Peck,
         Bushel
     }
@@ -125,7 +125,7 @@
         Reaumur,
         Delisle
     }
-    public enum Quantities
+    public enum Unit
     {
         Length,
         Mass,
