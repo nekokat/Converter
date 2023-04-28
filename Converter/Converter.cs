@@ -1,215 +1,209 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using Units;
 
 namespace Converter
 {
-    public abstract class Quantity<T> : IUnit<T>
+    struct Length
     {
-        public Quantity(double value, T unit)
+        public Length(double value, UnitLength unit)
         {
-            this.Value = value;
-            this.Unit = unit;
+            Value = value;
+            Unit = unit;
         }
 
+        public UnitLength BasicType { get { return UnitLength.Meter; } }
         public double Value { get; set; }
-        public T Unit { get; set; }
+        public UnitLength Unit { get; set; }
+        public void As(UnitLength unitOut)
+        {
+            Value = Base.Convert(Value, Units.Unit.Length, Unit, unitOut);
+            Unit = unitOut;
+        }
+
+        public override string ToString()
+        {
+            return $"{Value} {Unit}";
+        }
     }
-
-    public interface IUnit<T>
-    {
-        double Value { get; set; }
-
-        T Unit { get; set; }
-    }
-
-    internal class DVolume : Quantity<Volume>
-    {
-        public DVolume(double value, Volume unit) : base(value, unit) { }
-
-    }
-
-    public class Mesuarement
+    public class Base
     {
 
-    public static double ToLength(double value, Length inputType)
+        public static double ToLength(double value, UnitLength inputType)
         {
             return inputType switch
             {
                 //Metric
-                Length.Kilometer => value * 1000d,
-                Length.Hectometer => value * 100d,
-                Length.Decameter => value * 10d,
-                Length.Meter => value,
-                Length.Decimeter => value * 0.1d,
-                Length.Centimeter => value * 0.01d,
-                Length.Millimeter => value * 0.001d,
+                UnitLength.Kilometer => value * 1000d,
+                UnitLength.Hectometer => value * 100d,
+                UnitLength.Decameter => value * 10d,
+                UnitLength.Meter => value,
+                UnitLength.Decimeter => value * 0.1d,
+                UnitLength.Centimeter => value * 0.01d,
+                UnitLength.Millimeter => value * 0.001d,
                 //Imperial
-                Length.Foot => value * 0.3048d,
-                Length.Thou => value * ToLength(0.01d, Length.Inch),
-                Length.Line => value * ToLength(1/12d, Length.Inch),
-                Length.Point => value * ToLength(1/72d, Length.Inch),
-                Length.Inch => value * ToLength(1/12d, Length.Foot),
-                Length.Palm => value * ToLength(3d, Length.Inch),
-                Length.Nail => value * ToLength(1/16d, Length.Yard),
-                Length.Finger => value * ToLength(1/8d, Length.Yard),
-                Length.Fathom => ToLength(6d, Length.Foot),
-                Length.Shackle => ToLength(30d, Length.Yard),
-                Length.Mil => value * ToLength(0.001d, Length.Inch),
-                Length.Pole => value * ToLength(0.25d, Length.Chain),
-                Length.Hand => value * ToLength(1/3, Length.Foot),
-                Length.Yard => value * ToLength(3d, Length.Foot),
-                Length.Chain => value * ToLength(22d, Length.Yard),
-                Length.Furlong => value * ToLength(220d, Length.Yard),
-                Length.Link => value * ToLength(1/1000d, Length.Furlong),
-                Length.Mile => value * ToLength(1760d, Length.Yard),
-                Length.League => value * ToLength(3d, Length.Mile),
-                Length.Cable => value * ToLength(608d, Length.Foot),
-                Length.NauticalMile => value * ToLength(10, Length.Cable),
+                UnitLength.Foot => value * 0.3048d,
+                UnitLength.Thou => value * ToLength(0.01d, UnitLength.Inch),
+                UnitLength.Line => value * ToLength(1 / 12d, UnitLength.Inch),
+                UnitLength.Point => value * ToLength(1 / 72d, UnitLength.Inch),
+                UnitLength.Inch => value * ToLength(1 / 12d, UnitLength.Foot),
+                UnitLength.Palm => value * ToLength(3d, UnitLength.Inch),
+                UnitLength.Nail => value * ToLength(1 / 16d, UnitLength.Yard),
+                UnitLength.Finger => value * ToLength(1 / 8d, UnitLength.Yard),
+                UnitLength.Fathom => ToLength(6d, UnitLength.Foot),
+                UnitLength.Shackle => ToLength(30d, UnitLength.Yard),
+                UnitLength.Mil => value * ToLength(0.001d, UnitLength.Inch),
+                UnitLength.Pole => value * ToLength(0.25d, UnitLength.Chain),
+                UnitLength.Hand => value * ToLength(1 / 3, UnitLength.Foot),
+                UnitLength.Yard => value * ToLength(3d, UnitLength.Foot),
+                UnitLength.Chain => value * ToLength(22d, UnitLength.Yard),
+                UnitLength.Furlong => value * ToLength(220d, UnitLength.Yard),
+                UnitLength.Link => value * ToLength(1 / 1000d, UnitLength.Furlong),
+                UnitLength.Mile => value * ToLength(1760d, UnitLength.Yard),
+                UnitLength.League => value * ToLength(3d, UnitLength.Mile),
+                UnitLength.Cable => value * ToLength(608d, UnitLength.Foot),
+                UnitLength.NauticalMile => value * ToLength(10, UnitLength.Cable),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double ToMass(double value, Mass inputType)
+        public static double ToMass(double value, UnitMass inputType)
         {
             return inputType switch
             {
                 //Metric
-                Mass.Gigatonne => value * 1E15d,
-                Mass.Megatonne => value * 1E12d,
-                Mass.Tonne => value * 1E6d,
-                Mass.Quintal => value * 1E5d,
-                Mass.Kilogramm => value * 1E3d,
-                Mass.Gramm => value,
-                Mass.Milligramm => value * 1E-03d,
-                Mass.Microgram => value * 1E-06d,
-                Mass.Nanogram => value * 1E-12d,
-                Mass.Picogram => value * 1E-15d,
+                UnitMass.Gigatonne => value * 1E15d,
+                UnitMass.Megatonne => value * 1E12d,
+                UnitMass.Tonne => value * 1E6d,
+                UnitMass.Quintal => value * 1E5d,
+                UnitMass.Kilogramm => value * 1E3d,
+                UnitMass.Gramm => value,
+                UnitMass.Milligramm => value * 1E-03d,
+                UnitMass.Microgram => value * 1E-06d,
+                UnitMass.Nanogram => value * 1E-12d,
+                UnitMass.Picogram => value * 1E-15d,
                 //Imperial
-                Mass.UStonne => value * ToMass(0.907d, Mass.Tonne),
-                Mass.UKtonne => value * ToMass(1.016d, Mass.Tonne),
-                Mass.Pound => 453.59d * value,
-                Mass.Ounce => 28.35d * value,
-                Mass.Stone => value * ToMass(14d, Mass.Pound),
-                Mass.Quarter => value * ToMass(2d, Mass.Stone),
-                Mass.Hundredweight => value * ToMass(4d, Mass.Quarter),
-                Mass.Carat => value * ToMass(200d, Mass.Milligramm),
-                Mass.Point => value * ToMass(2d, Mass.Milligramm),
+                UnitMass.UStonne => value * ToMass(0.90718474d, UnitMass.Tonne),
+                UnitMass.UKtonne => value * ToMass(1.016d, UnitMass.Tonne),
+                UnitMass.Pound => 453.59d * value,
+                UnitMass.Ounce => 28.35d * value,
+                UnitMass.Stone => value * ToMass(14d, UnitMass.Pound),
+                UnitMass.Quarter => value * ToMass(2d, UnitMass.Stone),
+                UnitMass.Hundredweight => value * ToMass(4d, UnitMass.Quarter),
+                UnitMass.Carat => value * ToMass(200d, UnitMass.Milligramm),
+                UnitMass.Point => value * ToMass(2d, UnitMass.Milligramm),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double ToTime(double value, Time inputType)
+        public static double ToTime(double value, UnitTime inputType)
         {
             return inputType switch
             {
-                Time.Millisecond => value * 1E-03d,
-                Time.Second => value,
-                Time.Minute => value * 60d,
-                Time.Kilosecond => value * 1E3d,
-                Time.Hour => value * ToTime(60, Time.Minute),
-                Time.Day => value * ToTime(24, Time.Hour),
-                Time.Week => value * ToTime(7, Time.Day),
-                Time.Megasecond => value * 1E6d,
+                UnitTime.Millisecond => value * 1E-03d,
+                UnitTime.Second => value,
+                UnitTime.Minute => value * 60d,
+                UnitTime.Kilosecond => value * 1E3d,
+                UnitTime.Hour => value * ToTime(60, UnitTime.Minute),
+                UnitTime.Day => value * ToTime(24, UnitTime.Hour),
+                UnitTime.Week => value * ToTime(7, UnitTime.Day),
+                UnitTime.Megasecond => value * 1E6d,
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double ToVolume(double value, Volume inputType)
+        public static double ToVolume(double value, UnitVolume inputType)
         {
             return inputType switch
             {
                 //Metric
-                Volume.Litre => value * 0.001d,
-                Volume.Millilitre => value * 1e-6d,
-                Volume.CubicDecimetre => value * 0.001d,
-                Volume.CubicMetre => value,
-                Volume.CubicCentimetre => value * 1e-6d,
+                UnitVolume.Litre => value * 0.001d,
+                UnitVolume.Millilitre => value * 1e-6d,
+                UnitVolume.CubicDecimetre => value * 0.001d,
+                UnitVolume.CubicMetre => value,
+                UnitVolume.CubicCentimetre => value * 1e-6d,
                 //Imperial
-                Volume.CubicFoot => value * Math.Pow(ToLength(1, Length.Foot), 3d),
-                Volume.CubicInch => value * Math.Pow(ToLength(1, Length.Inch), 3d),
-                Volume.CubicYard => value * Math.Pow(ToLength(1, Length.Yard), 3d),
-                Volume.Barrel => value * ToVolume(9.702d, Volume.CubicInch),
-                Volume.USGallon => value * ToVolume(231d, Volume.CubicInch),
-                Volume.Gallon => value * ToVolume(1.20095042342d, Volume.USGallon),
-                Volume.Cup => value * ToVolume(0.5d, Volume.Pint),
-                Volume.Gill => value * ToVolume(5d, Volume.FluidOunce),
-                Volume.USPint => value * ToVolume(16d, Volume.USFluidOunce), 
-                Volume.Pint => value * ToVolume(20, Volume.FluidOunce),
-                Volume.USQuart => value * ToVolume(0.25d, Volume.USGallon),
-                Volume.Quart => value * ToVolume(2d, Volume.Pint),
-                Volume.USFluidOunce => value * ToVolume(1/128d, Volume.USGallon),
-                Volume.FluidOunce => value * ToVolume(1/160d, Volume.Gallon),
-                Volume.Peck => value * ToVolume(2d, Volume.Gallon),
-                Volume.Bushel => value * ToVolume(4d, Volume.Peck),
+                UnitVolume.CubicFoot => value * Math.Pow(ToLength(1, UnitLength.Foot), 3d),
+                UnitVolume.CubicInch => value * Math.Pow(ToLength(1, UnitLength.Inch), 3d),
+                UnitVolume.CubicYard => value * Math.Pow(ToLength(1, UnitLength.Yard), 3d),
+                UnitVolume.Barrel => value * ToVolume(9.702d, UnitVolume.CubicInch),
+                UnitVolume.USGallon => value * ToVolume(231d, UnitVolume.CubicInch),
+                UnitVolume.Gallon => value * ToVolume(1.20095042342d, UnitVolume.USGallon),
+                UnitVolume.Cup => value * ToVolume(0.5d, UnitVolume.Pint),
+                UnitVolume.Gill => value * ToVolume(5d, UnitVolume.FluidOunce),
+                UnitVolume.USPint => value * ToVolume(16d, UnitVolume.USFluidOunce),
+                UnitVolume.Pint => value * ToVolume(20, UnitVolume.FluidOunce),
+                UnitVolume.USQuart => value * ToVolume(0.25d, UnitVolume.USGallon),
+                UnitVolume.Quart => value * ToVolume(2d, UnitVolume.Pint),
+                UnitVolume.USFluidOunce => value * ToVolume(1 / 128d, UnitVolume.USGallon),
+                UnitVolume.FluidOunce => value * ToVolume(1 / 160d, UnitVolume.Gallon),
+                UnitVolume.Peck => value * ToVolume(2d, UnitVolume.Gallon),
+                UnitVolume.Bushel => value * ToVolume(4d, UnitVolume.Peck),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double ToArea(double value, Area inputType)
+        public static double ToArea(double value, UnitArea inputType)
         {
             return inputType switch
             {
                 //Mertic
-                Area.SquareKilometer => value * 1E6d,
-                Area.SquareHectometer => value * 1E4d,
-                Area.SquareDecameter => value * 1E2d,
-                Area.SquareMeter => value,
-                Area.SquareDecimeter => value * 1E-02d,
-                Area.SquareCentimeter => value * 1E-04d,
-                Area.SquareMillimeter => value * 1E-06d,
-                Area.Hectare => value *  1E4d,
-                Area.Are => value * 100d,
-                Area.Centiare => value,
+                UnitArea.SquareKilometer => value * 1E6d,
+                UnitArea.SquareHectometer => value * 1E4d,
+                UnitArea.SquareDecameter => value * 1E2d,
+                UnitArea.SquareMeter => value,
+                UnitArea.SquareDecimeter => value * 1E-02d,
+                UnitArea.SquareCentimeter => value * 1E-04d,
+                UnitArea.SquareMillimeter => value * 1E-06d,
+                UnitArea.Hectare => value * 1E4d,
+                UnitArea.Are => value * 100d,
+                UnitArea.Centiare => value,
                 //Imperial
-                Area.SquareInch => value * Math.Pow(ToLength(1, Length.Inch), 2),
-                Area.SquareFoot => value * Math.Pow(ToLength(1, Length.Foot), 2),
-                Area.SquareYard => value * Math.Pow(ToLength(1, Length.Yard), 2),
-                Area.Perch => value * ToArea(30.25d, Area.SquareYard),
-                Area.Rood => value * ToArea(40d, Area.Perch),
-                Area.Acre => value * ToArea(4d, Area.Rood),
-                Area.SquareMile => value * Math.Pow(ToLength(1, Length.Mile), 2),
+                UnitArea.SquareInch => value * Math.Pow(ToLength(1, UnitLength.Inch), 2),
+                UnitArea.SquareFoot => value * Math.Pow(ToLength(1, UnitLength.Foot), 2),
+                UnitArea.SquareYard => value * Math.Pow(ToLength(1, UnitLength.Yard), 2),
+                UnitArea.Perch => value * ToArea(30.25d, UnitArea.SquareYard),
+                UnitArea.Rood => value * ToArea(40d, UnitArea.Perch),
+                UnitArea.Acre => value * ToArea(4d, UnitArea.Rood),
+                UnitArea.SquareMile => value * Math.Pow(ToLength(1, UnitLength.Mile), 2),
                 _ => throw new NotImplementedException()
             };
 
         }
 
-        public static double ToCelsius(double value, Temperature inputType)
+        public static double ToCelsius(double value, UnitTemperature inputType)
         {
             return inputType switch
             {
-                Temperature.Celsius => value,
-                Temperature.Kelvin => value - 273.15d,
-                Temperature.Fahrenheit => (value - 32d) * (5d / 9d),
-                Temperature.Rankine => (value - 491.67d) * (5d / 9d),
-                Temperature.Newton => value * 33d / 100d,
-                Temperature.Romer => (value - 7.5d) * (40d / 21d),
-                Temperature.Reaumur => value * 1.25d,
-                Temperature.Delisle => (100d - value) * (2d / 3d),
+                UnitTemperature.Celsius => value,
+                UnitTemperature.Kelvin => value - 273.15d,
+                UnitTemperature.Fahrenheit => (value - 32d) * (5d / 9d),
+                UnitTemperature.Rankine => (value - 491.67d) * (5d / 9d),
+                UnitTemperature.Newton => value * 33d / 100d,
+                UnitTemperature.Romer => (value - 7.5d) * (40d / 21d),
+                UnitTemperature.Reaumur => value * 1.25d,
+                UnitTemperature.Delisle => (100d - value) * (2d / 3d),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double ToTemperature(double value, Temperature inputType, Temperature outputType)
+        public static double ToTemperature(double value, UnitTemperature inputType, UnitTemperature outputType)
         {
             double celsius = ToCelsius(value, inputType);
             return outputType switch
             {
-                Temperature.Celsius => celsius,
-                Temperature.Kelvin => celsius + 273.15d,
-                Temperature.Fahrenheit => (celsius * 9d / 5d) + 32d,
-                Temperature.Rankine => (celsius + 273.15d) * 9d / 5d,
-                Temperature.Newton => celsius * 100d / 33d,
-                Temperature.Romer => (celsius * 21d / 40d) + 7.5d,
-                Temperature.Reaumur => celsius * 0.8d,
-                Temperature.Delisle => (100d - celsius) * (3d / 2d),
+                UnitTemperature.Celsius => celsius,
+                UnitTemperature.Kelvin => celsius + 273.15d,
+                UnitTemperature.Fahrenheit => (celsius * 9d / 5d) + 32d,
+                UnitTemperature.Rankine => (celsius + 273.15d) * 9d / 5d,
+                UnitTemperature.Newton => celsius * 100d / 33d,
+                UnitTemperature.Romer => (celsius * 21d / 40d) + 7.5d,
+                UnitTemperature.Reaumur => celsius * 0.8d,
+                UnitTemperature.Delisle => (100d - celsius) * (3d / 2d),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static double Convertation(double value, Unit unit, object inputType, object outputType)
+        public static double Convert(double value, Unit unit, object inputType, object outputType)
         {
             double As<T>(Func<double, T, double> function)
             {
@@ -218,14 +212,15 @@ namespace Converter
 
             return unit switch
             {
-                Unit.Length => As<Length>(ToLength),
-                Unit.Mass => As<Mass>(ToMass),
-                Unit.Time => As<Time>(ToTime),
-                Unit.Volume => As<Volume>(ToVolume),
-                Unit.Area => As<Area>(ToArea),
-                Unit.Temperature => ToTemperature(value, (Temperature)inputType, (Temperature)outputType),
+                Unit.Length => As<UnitLength>(ToLength),
+                Unit.Mass => As<UnitMass>(ToMass),
+                Unit.Time => As<UnitTime>(ToTime),
+                Unit.Volume => As<UnitVolume>(ToVolume),
+                Unit.Area => As<UnitArea>(ToArea),
+                Unit.Temperature => ToTemperature(value, (UnitTemperature)inputType, (UnitTemperature)outputType),
                 _ => throw new NotImplementedException()
             };
         }
+
     }
 }

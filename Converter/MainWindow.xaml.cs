@@ -12,8 +12,11 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            DVolume t = new DVolume(100, Volume.Gallon);
-            Console.WriteLine(t.Value);
+            Length l = new Length(1, UnitLength.Meter);
+            l.As(UnitLength.Foot);
+            Console.WriteLine(l.ToString());
+            l.As(UnitLength.Meter);
+            Console.WriteLine(l.Value);
         }
     }
 }

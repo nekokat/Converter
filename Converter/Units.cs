@@ -1,16 +1,16 @@
 ﻿namespace Units
 {
-    public enum Length
+    public enum UnitLength
     {
         //Metric
+        Meter,
         Kilometer,
         Hectometer,
         Decameter,
-        Meter,
         Decimeter,
         Centimeter,
         Millimeter,
-    //Imperial
+        //Imperial
         Thou,
         Line,
         Point,
@@ -34,14 +34,15 @@
         NauticalMile
 
     }
-    public enum Mass
+    public enum UnitMass
     {
+
+        Gramm,
         Gigatonne,
         Megatonne,
         Tonne,
         Quintal,
         Kilogramm,
-        Gramm,
         Milligramm,
         Microgram,
         Nanogram,
@@ -57,10 +58,10 @@
         Point
 
     }
-    public enum Time
+    public enum UnitTime
     {
-        Millisecond,
         Second,
+        Millisecond,        
         Minute,
         Kilosecond,
         Hour,
@@ -68,13 +69,13 @@
         Week,
         Megasecond
     }
-    public enum Volume
+    public enum UnitVolume
     {
         //Metric
+        CubicMetre,
         Litre,
         Millilitre,
         CubicDecimetre,
-        CubicMetre,
         CubicCentimetre,
         //Imperial
         CubicFoot,
@@ -94,12 +95,12 @@
         Peck,
         Bushel
     }
-    public enum Area
+    public enum UnitArea
     {
+        SquareMeter,
         SquareKilometer,
         SquareHectometer,
         SquareDecameter,
-        SquareMeter,
         SquareDecimeter,
         SquareCentimeter,
         SquareMillimeter,
@@ -114,7 +115,7 @@
         Acre,
         SquareMile
     }
-    public enum Temperature
+    public enum UnitTemperature
     {
         Celsius,
         Kelvin,
