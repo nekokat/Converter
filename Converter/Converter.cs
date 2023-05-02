@@ -5,14 +5,24 @@ using Units;
 
 namespace Converter
 {
+    /// <summary>
+    /// 
+    /// </summary>
     abstract class Structure : IStructure
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
         public Structure(double value, Enum unit)
         {
             Value = value;
             Unit = unit;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public Enum BaseType {
             get
             {
@@ -28,33 +38,76 @@ namespace Converter
                 };
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public double Value { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Enum Unit { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOut"></param>
         public void As(Enum unitOut)
         {
             Value = Base.Convert(Value, BaseType, Unit, unitOut);
             Unit = unitOut;
         }
-                                                                                                                                                                                                                                                                                                                                                                                                                                
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{Value} {Unit}";
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     interface IStructure
     {
+        /// <summary>
+        /// 
+        /// </summary>
         Enum BaseType { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         double Value { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         Enum Unit { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
         void As(Enum unit);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         string ToString();
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     class Length : Structure
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
         public Length(double value, UnitLength unit) : base(value, unit) { }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOut"></param>
         public new void As(Enum unitOut)
         {
             Value = Base.Convert(Value, BaseType, Unit, unitOut);
@@ -62,9 +115,18 @@ namespace Converter
         }
     }
 
+    /// <summary>
+    /// /
+    /// </summary>
     public class Base
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToLength(double value, Enum inputType)
         {
             return inputType switch
@@ -102,7 +164,13 @@ namespace Converter
                 _ => throw new NotImplementedException()
             };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToMass(double value, Enum inputType)
         {
             return inputType switch
@@ -131,7 +199,13 @@ namespace Converter
                 _ => throw new NotImplementedException()
             };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToTime(double value, Enum inputType)
         {
             return inputType switch
@@ -147,7 +221,13 @@ namespace Converter
                 _ => throw new NotImplementedException()
             };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToVolume(double value, Enum inputType)
         {
             return inputType switch
@@ -178,7 +258,13 @@ namespace Converter
                 _ => throw new NotImplementedException()
             };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToArea(double value, Enum inputType)
         {
             return inputType switch
@@ -206,7 +292,13 @@ namespace Converter
             };
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToCelsius(double value, Enum inputType)
         {
             return inputType switch
@@ -222,7 +314,14 @@ namespace Converter
                 _ => throw new NotImplementedException()
             };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <param name="outputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double ToTemperature(double value, Enum inputType, Enum outputType)
         {
             double celsius = ToCelsius(value, inputType);
@@ -239,9 +338,18 @@ namespace Converter
                 _ => throw new NotImplementedException()
             };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
+        /// <param name="inputType"></param>
+        /// <param name="outputType"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static double Convert(double value, Enum unit, Enum inputType, Enum outputType)
         {
+            
             double As(Func<double, Enum, double> function)
             {
                 return function(value, inputType) / function(1, outputType);
@@ -249,15 +357,14 @@ namespace Converter
 
             return unit switch
             {
-                Units.Unit.Length => As(ToLength),
-                Units.Unit.Mass => As(ToMass),
-                Units.Unit.Time => As(ToTime),
-                Units.Unit.Volume => As(ToVolume),
-                Units.Unit.Area => As(ToArea),
-                Units.Unit.Temperature => ToTemperature(value, inputType, outputType),
+                Unit.Length => As(ToLength),
+                Unit.Mass => As(ToMass),
+                Unit.Time => As(ToTime),
+                Unit.Volume => As(ToVolume),
+                Unit.Area => As(ToArea),
+                Unit.Temperature => ToTemperature(value, inputType, outputType),
                 _ => throw new NotImplementedException()
             };
         }
-
     }
 }

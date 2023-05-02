@@ -1,5 +1,8 @@
 ﻿namespace Units
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UnitLength : long
     {
         //Metric
@@ -34,6 +37,9 @@
         NauticalMile
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UnitMass
     {
 
@@ -58,6 +64,9 @@
         Point
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UnitTime
     {
         Second,
@@ -69,6 +78,9 @@
         Week,
         Megasecond
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UnitVolume
     {
         //Metric
@@ -95,6 +107,9 @@
         Peck,
         Bushel
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UnitArea
     {
         SquareMeter,
@@ -115,6 +130,9 @@
         Acre,
         SquareMile
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public enum UnitTemperature
     {
         Celsius,
@@ -126,6 +144,9 @@
         Reaumur,
         Delisle
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public enum Unit
     {
         Length,
