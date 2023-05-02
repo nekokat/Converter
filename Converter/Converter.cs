@@ -16,14 +16,14 @@ namespace Converter
         public Enum BaseType {
             get
             {
-                return typeof(Unit).GetType().Name switch
+                return this.GetType().Name switch
                 {
-                    "UnitLength" => Units.Unit.Length,
-                    "UnitMass" => Units.Unit.Mass,
-                    "UnitTime" => Units.Unit.Time,
-                    "UnitVolume" => Units.Unit.Volume,
-                    "UnitArea" => Units.Unit.Area,
-                    "UnitTemperature" => Units.Unit.Temperature,
+                    "Length" => Units.Unit.Length,
+                    "Mass" => Units.Unit.Mass,
+                    "Time" => Units.Unit.Time,
+                    "Volume" => Units.Unit.Volume,
+                    "Area" => Units.Unit.Area,
+                    "Temperature" => Units.Unit.Temperature,
                     _ => throw new NotImplementedException()
                 };
             }
