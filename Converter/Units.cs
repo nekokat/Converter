@@ -1,6 +1,6 @@
 ﻿namespace Units
 {
-    public enum UnitLength
+    public enum UnitLength : long
     {
         //Metric
         Meter,

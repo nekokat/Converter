@@ -1,34 +1,71 @@
 ﻿using System;
+using System.Collections;
+using System.Windows.Input;
 using Units;
 
 namespace Converter
 {
-    struct Length
+    abstract class Structure : IStructure
     {
-        public Length(double value, UnitLength unit)
+        public Structure(double value, Enum unit)
         {
             Value = value;
             Unit = unit;
         }
 
-        public UnitLength BasicType { get { return UnitLength.Meter; } }
+        public Enum BaseType {
+            get
+            {
+                return typeof(Unit).GetType().Name switch
+                {
+                    "UnitLength" => Units.Unit.Length,
+                    "UnitMass" => Units.Unit.Mass,
+                    "UnitTime" => Units.Unit.Time,
+                    "UnitVolume" => Units.Unit.Volume,
+                    "UnitArea" => Units.Unit.Area,
+                    "UnitTemperature" => Units.Unit.Temperature,
+                    _ => throw new NotImplementedException()
+                };
+            }
+        }
         public double Value { get; set; }
-        public UnitLength Unit { get; set; }
-        public void As(UnitLength unitOut)
+        public Enum Unit { get; set; }
+
+        public void As(Enum unitOut)
         {
-            Value = Base.Convert(Value, Units.Unit.Length, Unit, unitOut);
+            Value = Base.Convert(Value, BaseType, Unit, unitOut);
             Unit = unitOut;
         }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                
         public override string ToString()
         {
             return $"{Value} {Unit}";
         }
     }
+
+    interface IStructure
+    {
+        Enum BaseType { get; }
+        double Value { get; set; }
+        Enum Unit { get; set; }
+        void As(Enum unit);
+        string ToString();
+
+    }
+    class Length : Structure
+    {
+        public Length(double value, UnitLength unit) : base(value, unit) { }
+        public new void As(Enum unitOut)
+        {
+            Value = Base.Convert(Value, BaseType, Unit, unitOut);
+            Unit = unitOut;
+        }
+    }
+
     public class Base
     {
 
-        public static double ToLength(double value, UnitLength inputType)
+        public static double ToLength(double value, Enum inputType)
         {
             return inputType switch
             {
@@ -66,7 +103,7 @@ namespace Converter
             };
         }
 
-        public static double ToMass(double value, UnitMass inputType)
+        public static double ToMass(double value, Enum inputType)
         {
             return inputType switch
             {
@@ -95,7 +132,7 @@ namespace Converter
             };
         }
 
-        public static double ToTime(double value, UnitTime inputType)
+        public static double ToTime(double value, Enum inputType)
         {
             return inputType switch
             {
@@ -111,7 +148,7 @@ namespace Converter
             };
         }
 
-        public static double ToVolume(double value, UnitVolume inputType)
+        public static double ToVolume(double value, Enum inputType)
         {
             return inputType switch
             {
@@ -142,7 +179,7 @@ namespace Converter
             };
         }
 
-        public static double ToArea(double value, UnitArea inputType)
+        public static double ToArea(double value, Enum inputType)
         {
             return inputType switch
             {
@@ -170,7 +207,7 @@ namespace Converter
 
         }
 
-        public static double ToCelsius(double value, UnitTemperature inputType)
+        public static double ToCelsius(double value, Enum inputType)
         {
             return inputType switch
             {
@@ -186,7 +223,7 @@ namespace Converter
             };
         }
 
-        public static double ToTemperature(double value, UnitTemperature inputType, UnitTemperature outputType)
+        public static double ToTemperature(double value, Enum inputType, Enum outputType)
         {
             double celsius = ToCelsius(value, inputType);
             return outputType switch
@@ -203,21 +240,21 @@ namespace Converter
             };
         }
 
-        public static double Convert(double value, Unit unit, object inputType, object outputType)
+        public static double Convert(double value, Enum unit, Enum inputType, Enum outputType)
         {
-            double As<T>(Func<double, T, double> function)
+            double As(Func<double, Enum, double> function)
             {
-                return function(value, (T)inputType) / function(1, (T)outputType);
+                return function(value, inputType) / function(1, outputType);
             }
 
             return unit switch
             {
-                Unit.Length => As<UnitLength>(ToLength),
-                Unit.Mass => As<UnitMass>(ToMass),
-                Unit.Time => As<UnitTime>(ToTime),
-                Unit.Volume => As<UnitVolume>(ToVolume),
-                Unit.Area => As<UnitArea>(ToArea),
-                Unit.Temperature => ToTemperature(value, (UnitTemperature)inputType, (UnitTemperature)outputType),
+                Units.Unit.Length => As(ToLength),
+                Units.Unit.Mass => As(ToMass),
+                Units.Unit.Time => As(ToTime),
+                Units.Unit.Volume => As(ToVolume),
+                Units.Unit.Area => As(ToArea),
+                Units.Unit.Temperature => ToTemperature(value, inputType, outputType),
                 _ => throw new NotImplementedException()
             };
         }
