@@ -15,11 +15,11 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            Length l = new Length(1, UnitLength.Meter);
-            l.As(UnitLength.Foot);
+            Area l = new Area(1, UnitArea.SquareMeter);
+            l.As(UnitArea.SquareYard);
             Console.WriteLine(l.ToString());
-            l.As(UnitLength.Meter);
-            Console.WriteLine(l.Value);
+            l.As(UnitArea.SquareMeter);
+            Console.WriteLine(l.ToString());
         }
     }
 }

@@ -26,16 +26,7 @@ namespace Converter
         public Enum BaseType {
             get
             {
-                return this.GetType().Name switch
-                {
-                    "Length" => Units.Unit.Length,
-                    "Mass" => Units.Unit.Mass,
-                    "Time" => Units.Unit.Time,
-                    "Volume" => Units.Unit.Volume,
-                    "Area" => Units.Unit.Area,
-                    "Temperature" => Units.Unit.Temperature,
-                    _ => throw new NotImplementedException()
-                };
+                return (Unit)Enum.Parse(typeof(Unit), this.GetType().Name);
             }
         }
         /// <summary>
@@ -96,6 +87,18 @@ namespace Converter
     /// <summary>
     /// 
     /// </summary>
+    class Mass : Structure
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
+        public Mass(double value, Enum unit) : base(value, unit) { }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
     class Length : Structure
     {
         /// <summary>
@@ -103,16 +106,55 @@ namespace Converter
         /// </summary>
         /// <param name="value"></param>
         /// <param name="unit"></param>
-        public Length(double value, UnitLength unit) : base(value, unit) { }
+        public Length(double value, Enum unit) : base(value, unit) { }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    class Temperature : Structure
+    {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="unitOut"></param>
-        public new void As(Enum unitOut)
-        {
-            Value = Base.Convert(Value, BaseType, Unit, unitOut);
-            Unit = unitOut;
-        }
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
+        public Temperature(double value, Enum unit) : base(value, unit) { }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    class Area : Structure
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
+        public Area(double value, Enum unit) : base(value, unit) { }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    class Time : Structure
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
+        public Time(double value, Enum unit) : base(value, unit) { }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    class Volume : Structure
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="unit"></param>
+        public Volume(double value, Enum unit) : base(value, unit) { }
     }
 
     /// <summary>
