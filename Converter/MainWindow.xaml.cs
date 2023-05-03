@@ -15,8 +15,8 @@ namespace Converter
         public MainWindow()
         {
             //InitializeComponent();
-            Area l = new Area(1, UnitArea.SquareMeter);
-            l.As(UnitArea.SquareYard);
+            Area l = new Area(1, UnitArea.SquareMile);
+            l.As(UnitArea.SquareMile);
             Console.WriteLine(l.ToString());
             l.As(UnitArea.SquareMeter);
             Console.WriteLine(l.ToString());
